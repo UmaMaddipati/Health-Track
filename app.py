@@ -4,8 +4,9 @@ import pandas as pd
 
 app = Flask(__name__, static_url_path='/static', static_folder='templates', template_folder='templates')
 
-# Load the model from the pickle file
-with open('model.pkl', 'rb') as file:
+import gzip
+# Load the model from the compressed gzip file
+with gzip.open('model.pkl.gz', 'rb') as file:
     pipeline = pickle.load(file)
 
 @app.route('/')
