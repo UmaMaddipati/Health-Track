@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Track Pro | Analysis Results</title>
+    <!-- Point to the new unified style.css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="title-container"
+            style="display: flex; align-items: center; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <div>
+                <h1 class="animated-text" style="text-align: center; margin-bottom: 0;"> Analysis Complete</h1>
+                <p class="subtitle" style="text-align: center;">Here is your personalized AI health breakdown</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="glass-panel" style="max-width: 900px; text-align: left;">
+
+        <h2
+            style="font-size: 1.8rem; border-bottom: 1px solid var(--card-border); padding-bottom: 15px; margin-bottom: 20px; color: var(--primary);">
+            <i class="fa-solid fa-chart-line"></i> Quick Vitals Analysis
+        </h2>
+
+        <div class="vitals-grid">
+            <div class="vital-card" style="border-left: 4px solid {{ vitals.bp_color }};">
+                <div class="vital-title">Blood Pressure</div>
+                <div class="vital-value">{{ vitals.bp }}</div>
+                <div class="vital-status" style="color: {{ vitals.bp_color }};">{{ vitals.bp_status }}</div>
+            </div>
+            <div class="vital-card" style="border-left: 4px solid {{ vitals.hr_color }};">
+                <div class="vital-title">Heart Rate</div>
+                <div class="vital-value">{{ vitals.hr }}</div>
+                <div class="vital-status" style="color: {{ vitals.hr_color }};">{{ vitals.hr_status }}</div>
+            </div>
+            <div class="vital-card" style="border-left: 4px solid {{ vitals.sleep_color }};">
+                <div class="vital-title">Sleep Duration</div>
+                <div class="vital-value">{{ vitals.sleep }}</div>
+                <div class="vital-status" style="color: {{ vitals.sleep_color }};">{{ vitals.sleep_status }}</div>
+            </div>
+        </div>
+
+        <h2
+            style="font-size: 1.8rem; border-bottom: 1px solid var(--card-border); padding-bottom: 15px; margin-top: 30px; margin-bottom: 20px; color: var(--primary);">
+            <i class="fa-solid fa-robot"></i> AI Health Report
+        </h2>
+
+        <div class="results-grid">
+
+            <div class="result-card report-card" style="border-left-color: #8b5a5a;">
+                <h3><i class="fa-solid fa-triangle-exclamation"></i> Historical Risk Analysis</h3>
+                <p style="white-space: pre-line; margin-top: 10px;">{{ risk_assessment }}</p>
+            </div>
+
+            <div class="result-card report-card" style="border-left-color: #64748b;">
+                <h3><i class="fa-solid fa-stethoscope"></i> General Assessment</h3>
+                <p style="white-space: pre-line; margin-top: 10px;">{{ report }}</p>
+            </div>
+
+            <div class="result-card report-card" style="border-left-color: #a68a64;">
+                <h3><i class="fa-regular fa-lightbulb"></i> Recommendations</h3>
+                <p style="white-space: pre-line; margin-top: 10px;">{{ suggestions }}</p>
+            </div>
+
+            <div class="result-card report-card" style="border-left-color: #8da47e;">
+                <h3><i class="fa-solid fa-person-walking"></i> Habit Adjustments</h3>
+                <p style="white-space: pre-line; margin-top: 10px;">{{ habit }}</p>
+            </div>
+
+            <div class="result-card report-card" style="border-left-color: #7b916c;">
+                <h3><i class="fa-solid fa-apple-whole"></i> Dietary Plan</h3>
+                <p style="white-space: pre-line; margin-top: 10px;">{{ food }}</p>
+            </div>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem; display: flex; justify-content: center; gap: 15px;">
+            <a href="/" class="action-btn">
+                <i class="fa-solid fa-arrow-rotate-left"></i> Run Another Test
+            </a>
+            <button onclick="window.print()" class="action-btn"
+                style="cursor: pointer; font-family: inherit; font-size: inherit;">
+                <i class="fa-solid fa-print"></i> Print Report
+            </button>
+        </div>
+
+    </main>
+
+</body>
+
+</html>

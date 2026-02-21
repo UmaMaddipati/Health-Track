@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Track Pro | AI Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Load FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="title-container"
+            style="display: flex; align-items: center; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <div>
+                <h1 class="animated-text" style="text-align: center; margin-bottom: 0;"> AI Health Risk Assessment
+                    Dashboard</h1>
+                <p class="subtitle" style="text-align: center;">Personalized Health & Wellness Engine</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="glass-panel">
+        <form id="healthForm" action="/predict" method="post">
+            <div class="forms-grid">
+
+                <!-- Section 1: Demographics -->
+                <div class="form-section">
+                    <h2 class="form-section-title"><i class="fa-solid fa-user"></i> Patient Info</h2>
+
+                    <div class="form-group">
+                        <label for="Age">Age</label>
+                        <input type="number" id="Age" name="Age" placeholder="e.g. 25" required min="1" max="120">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="radio-group-container">
+                            <label class="radio-label">
+                                <input type="radio" name="Gender" value="1" required>
+                                <span>Male</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="Gender" value="0" required>
+                                <span>Female</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Weight">Weight (kg)</label>
+                        <input type="number" id="Weight" name="Weight" placeholder="e.g. 70" required min="20">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="BodyTemperature">Body Temp (°F)</label>
+                        <input type="number" step="0.1" id="BodyTemperature" name="BodyTemperature"
+                            placeholder="e.g. 98.6" required>
+                    </div>
+                </div>
+
+                <!-- Section 2: Vitals & History -->
+                <div class="form-section">
+                    <h2 class="form-section-title"><i class="fa-solid fa-file-medical"></i> Clinical Data</h2>
+
+                    <div class="form-group">
+                        <label for="HeartRate">Heart Rate (bpm)</label>
+                        <input type="number" id="HeartRate" name="HeartRate" placeholder="e.g. 75" required>
+                    </div>
+
+                    <div class="form-group" style="display: flex; gap: 1rem;">
+                        <div style="flex: 1;">
+                            <label for="SystolicPressure">Systolic BP</label>
+                            <input type="number" id="SystolicPressure" name="SystolicPressure" placeholder="120"
+                                required>
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="DiastolicPressure">Diastolic BP</label>
+                            <input type="number" id="DiastolicPressure" name="DiastolicPressure" placeholder="80"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Symptoms">Current Symptoms</label>
+                        <input type="text" id="Symptoms" name="Symptoms" placeholder="e.g. Headache, Fatigue or None"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="MedicalHistory">Medical History</label>
+                        <input type="text" id="MedicalHistory" name="MedicalHistory"
+                            placeholder="e.g. Diabetes, Asthma or None" required>
+                    </div>
+                </div>
+
+                <!-- Section 3: Lifestyle -->
+                <div class="form-section">
+                    <h2 class="form-section-title"><i class="fa-solid fa-person-running"></i> Lifestyle</h2>
+
+                    <div class="form-group">
+                        <label>Smoker?</label>
+                        <div class="radio-group-container">
+                            <label class="radio-label">
+                                <input type="radio" name="Smoker" value="1" required
+                                    onchange="document.getElementById('smokerDaysGroup').style.display='flex'">
+                                <span>Yes</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="Smoker" value="0" required
+                                    onchange="document.getElementById('smokerDaysGroup').style.display='none'">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="smokerDaysGroup" style="display: none; animation: fadeIn 0.3s ease;">
+                        <label for="SmokerDays">Days since started smoking (approx)</label>
+                        <input type="number" id="SmokerDays" name="SmokerDays" placeholder="e.g. 365" min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Drinker?</label>
+                        <div class="radio-group-container">
+                            <label class="radio-label">
+                                <input type="radio" name="Drinker" value="1" required
+                                    onchange="document.getElementById('drinkerDaysGroup').style.display='flex'">
+                                <span>Yes</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="Drinker" value="0" required
+                                    onchange="document.getElementById('drinkerDaysGroup').style.display='none'">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="drinkerDaysGroup" style="display: none; animation: fadeIn 0.3s ease;">
+                        <label for="DrinkerDays">Days since started drinking (approx)</label>
+                        <input type="number" id="DrinkerDays" name="DrinkerDays" placeholder="e.g. 730" min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Exercise">Exercise Frequency</label>
+                        <input type="text" id="Exercise" name="Exercise" placeholder="e.g. 3 days/week" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="SleepHours">Sleep (Hours/Night)</label>
+                        <input type="number" id="SleepHours" name="SleepHours" placeholder="e.g. 7" required min="1"
+                            max="24">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Lifestyle">Overall Lifestyle</label>
+                        <select id="Lifestyle" name="Lifestyle" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="1">Active</option>
+                            <option value="3">Moderately Active</option>
+                            <option value="2">Sedentary</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Generate AI Health Report
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Overlay triggered via JS on submit -->
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Analyzing your vitals...</div>
+    </div>
+
+    <script>
+        document.getElementById('healthForm').addEventListener('submit', function () {
+            document.getElementById('loadingOverlay').classList.add('active');
+        });
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+
+</html>
