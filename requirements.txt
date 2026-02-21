@@ -1,5 +1,5 @@
 flask
 joblib
-pandas
+pandas==2.0.3
 waitress
-scikit-learn
+scikit-learn==1.2.2
