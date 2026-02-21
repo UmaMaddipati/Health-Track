@@ -2,3 +2,4 @@ flask
 joblib
 pandas
 waitress
+scikit-learn
